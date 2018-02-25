@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://cycloud.com/2018/03/25/object-detection-发展综述/13.jpg">
 <meta property="og:image" content="http://cycloud.com/2018/03/25/object-detection-发展综述/14.jpg">
 <meta property="og:image" content="http://cycloud.com/2018/03/25/object-detection-发展综述/15.jpg">
-<meta property="og:updated_time" content="2018-02-25T12:55:16.577Z">
+<meta property="og:updated_time" content="2018-02-25T14:09:41.727Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="object detection 发展综述">
 <meta name="twitter:description" content="参考资料：包含各领域的调研报告：http://s1nh.org/post/cv-sjtu/https://zhuanlan.zhihu.com/p/21412911https://www.jiqizhixin.com/articles/2017-09-18-7 任务分类： 物体探测也称物体检测（object detection）自从 faster RCNN 后，物体定位和物体识别就同时一起做了。目">
@@ -416,7 +416,7 @@
       
         <p>参考资料：<br>包含各领域的调研报告：<a href="http://s1nh.org/post/cv-sjtu/" target="_blank" rel="noopener">http://s1nh.org/post/cv-sjtu/</a><br><a href="https://zhuanlan.zhihu.com/p/21412911" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/21412911</a><br><a href="https://www.jiqizhixin.com/articles/2017-09-18-7" target="_blank" rel="noopener">https://www.jiqizhixin.com/articles/2017-09-18-7</a></p>
 <h3 id="任务分类："><a href="#任务分类：" class="headerlink" title="任务分类："></a>任务分类：</h3><ol>
-<li>物体探测也称物体检测（object detection）<br>自从 faster RCNN 后，物体定位和物体识别就同时一起做了。目前主要的开源代码是 SSD，faster RCNN, Yolo。各有优劣，SSD 和 faster RCNN 是 recall 比较高，Yolo 是 precision 比较高。 综合上来看，如果一定要选一个的话，我推荐 Yolo。注意，目前的 object detection 是用 mAP 来衡量，但 mAP 差个几个点范围内很难说明实际效果的好坏。我们组写了一个 object detection 的详细结束文件（和这份文件一起交付）。<br>另外还有一篇是刚刚出来的 Mask RCNN，性能比现在的物体检测器都好。 文章在这里 <a href="https://arxiv.org/abs/1703.06870" target="_blank" rel="noopener">https://arxiv.org/abs/1703.06870</a><br>具体中文讨论在这里 <a href="https://www.zhihu.com/question/57403701" target="_blank" rel="noopener">https://www.zhihu.com/question/57403701</a>  </li>
+<li>物体探测也称物体检测（object detection）<br>自从 faster RCNN 后，物体定位和物体识别就同时一起做了。目前主要的开源代码是 SSD，faster RCNN, Yolo。各有优劣，SSD 和 faster RCNN 是 recall 比较高，Yolo 是 precision 比较高。 综合上来看，如果一定要选一个的话，我推荐 Yolo。注意，目前的 object detection 是用 mAP 来衡量，但 mAP 差个几个点范围内很难说明实际效果的好坏。我们组写了一个 object detection 的详细结束文件（和这份文件一起交付）。<br>另外还有一篇是刚刚出来的 Mask RCNN，性能比现在的物体检测器都好。 文章在这里 <a href="https://arxiv.org/abs/1703.06870" target="_blank" rel="noopener">https://arxiv.org/abs/1703.06870</a><br>具体中文讨论在这里 <a href="https://www.zhihu.com/question/57403701" target="_blank" rel="noopener">https://www.zhihu.com/question/57403701</a>  <a id="more"></a></li>
 <li>视频中的物体探测<br>学术上这个被称为多物体跟踪（mutli-object tracking），他的基本原理是跟踪和物体检测联合训练。 主要的算法可以在这里两个网站上查到：<br>这个是专门做多物体跟踪的： <a href="https://motchallenge.net/" target="_blank" rel="noopener">https://motchallenge.net/</a><br>里面有一些有文章<br>另一个网站是： <a href="http://www.cvlibs.net/datasets/kitti/eval_tracking.php" target="_blank" rel="noopener">http://www.cvlibs.net/datasets/kitti/eval_tracking.php</a><br>这个虽然是无人车的，但原理差不多，你们可以用他们的模型<br>如果代码的话推荐这篇， <a href="http://yuxng.github.io/" target="_blank" rel="noopener">http://yuxng.github.io/</a><br>这两篇文章都有代码，<br>Learning to Track: Online Multi-Object Tracking by Decision Making.<br>Subcategory-aware Convolutional Neural Networks for Object Proposals and Detection.<br>另外 multi-object tracking 都比较慢，如果要快点的话，可以使用 yolo 每帧做处理，然后简单复现这篇文章，就行了。<br>Seq-NMS for Video Object Detection <a href="https://arxiv.org/abs/1602.08465" target="_blank" rel="noopener">https://arxiv.org/abs/1602.08465</a></li>
 </ol>
 <h1 id="一、-object-detection任务"><a href="#一、-object-detection任务" class="headerlink" title="一、 object detection任务"></a>一、 object detection任务</h1><p>1、任务综述<br>给定一张图像或者视频帧，找出其中所有目标的位置，并给出每个目标的具体类别，图片中可能有一个目标或几个目标。如下图所示<br><img src="/2018/03/25/object-detection-发展综述/1.jpg" alt=""><br>对计算机来说，目标检测最困难的部分在于计算机不清楚目标出现在图像中哪个区域。图像中的目标可能出现在任何位置，目标的形态可能存在各种各样的变化。<br>2、模型框架<br>传统的目标检测中，常见的算法是DPM（Deformable Part Model）。2013年利用深度学习算法的R-CNN（Region-based Convolutional Neural Networks）的诞生使基于深度学习的目标检测进入了一个全新的时期。R-CNN在VOC 2007测试集的mAP达到48%。从此Ross Girshick一发不可收拾，连续推出了Fast R-CNN、Faster R-CNN。受Ross Girshick启发许多基于深度学习的目标检测算法被提出 </p>
@@ -883,7 +883,7 @@
         notify: false,
         appId: 'c8EGz0UJdLGtKIQrEcigcIQ1-gzGzoHsz',
         appKey: 'kCnvRmlJzvyHmzV2g7YQXLVN',
-        placeholder: '��������',
+        placeholder: 'miaomiaomiao��',
         avatar:'mm',
         guest_info:guest,
         pageSize:'10' || 10,
